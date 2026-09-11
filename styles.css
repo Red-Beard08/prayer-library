@@ -1,0 +1,43 @@
+.prayer-library-dashboard{padding:1.5rem;max-width:1100px;margin:auto;background:linear-gradient(145deg,rgba(198,91,48,.08),transparent 35%);min-height:100%}.prayer-library-dashboard h1{font-size:2.4rem;margin-bottom:.25rem}.prayer-library-dashboard h1:before{content:"RED-BEARD  ·  PRAYER LIBRARY";display:block;font-size:.35em;letter-spacing:.18em;color:var(--text-accent);margin-bottom:.8rem}.prayer-library-primary{background:var(--interactive-accent);color:var(--text-on-accent);font-weight:600}.prayer-library-card{box-shadow:0 8px 24px rgba(0,0,0,.14);transition:transform .15s ease,box-shadow .15s ease}.prayer-library-card:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.22)}.prayer-library-toolbar,.prayer-library-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.75rem 0}.prayer-library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem}.prayer-library-card{border:1px solid var(--background-modifier-border);border-radius:12px;padding:1rem;background:var(--background-secondary)}.prayer-library-card h3{margin-top:0}.prayer-library-card p{white-space:pre-line}.prayer-library-muted{color:var(--text-muted)}.prayer-library-status{display:inline-block;border-radius:999px;padding:.15rem .5rem;background:var(--interactive-accent);color:var(--text-on-accent);font-size:.8em}.prayer-library-modal{max-height:85vh;overflow:auto}.prayer-library-modal textarea{min-height:9rem;width:100%}.prayer-library-modal input,.prayer-library-modal select{width:100%}@media(max-width:600px){.prayer-library-dashboard{padding:.75rem}.prayer-library-grid{grid-template-columns:1fr}.prayer-library-actions button{flex:1 1 100%}}
+
+/* Keyboard-safe mobile modal scrolling */
+.prayer-library-modal,.prayer-library-modal .modal-content{max-height:calc(100dvh - 24px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(160px + env(safe-area-inset-bottom));}
+@media(max-width:700px){.prayer-library-modal{max-height:calc(100dvh - 16px);}.prayer-library-modal .modal-content{max-height:calc(100dvh - 20px);padding-bottom:calc(200px + env(safe-area-inset-bottom));}}
+
+/* Keep prayer forms, schedules, and save controls above the iOS keyboard. */
+.prayer-library-modal { display: flex; flex-direction: column; max-height: calc(100dvh - 24px); }
+.prayer-library-modal .modal-content { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto !important; overscroll-behavior: contain; scroll-padding-top: 16px; scroll-padding-bottom: 55vh; padding-bottom: calc(280px + env(safe-area-inset-bottom)); }
+@media (max-width: 700px) {
+  .prayer-library-modal { max-height: calc(100dvh - 16px); }
+  .prayer-library-modal .modal-content { max-height: none; padding-bottom: calc(320px + env(safe-area-inset-bottom)); scroll-padding-bottom: 60vh; }
+}
+
+/* Card-based dashboard refresh */
+.prayer-library-hero { margin: 0 0 22px; padding: clamp(22px, 5vw, 44px); border: 1px solid var(--background-modifier-border); border-radius: 24px; background: radial-gradient(circle at 90% 15%, color-mix(in srgb, var(--interactive-accent) 18%, transparent), transparent 36%), linear-gradient(135deg, var(--background-secondary), var(--background-primary)); box-shadow: 0 12px 32px rgba(0,0,0,.14); }
+.prayer-library-kicker, .prayer-library-eyebrow { color: var(--text-accent); font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.prayer-library-hero h1 { margin: .35rem 0 .2rem; font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -.04em; }
+.prayer-library-hero p { color: var(--text-muted); max-width: 620px; margin: 0 0 1rem; }
+.prayer-library-toolbar { margin: 0; }
+.prayer-library-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 24px; }
+.prayer-library-metric { padding: 16px; border: 1px solid var(--background-modifier-border); border-radius: 16px; background: var(--background-secondary); }
+.prayer-library-metric strong { display: block; font-size: 1.8rem; line-height: 1; }
+.prayer-library-metric span { display: block; color: var(--text-muted); font-size: var(--font-ui-smaller); margin-top: 6px; }
+.prayer-library-section { margin: 0 0 28px; }
+.prayer-library-section-heading { margin-bottom: 12px; }
+.prayer-library-section-heading h2 { margin: .2rem 0 0; }
+.prayer-library-card-grid, .prayer-library-category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.prayer-library-card { min-width: 0; }
+.prayer-library-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.prayer-library-card-top h3 { flex: 1; }
+.prayer-library-card p { line-height: 1.5; }
+.prayer-library-card button { margin-top: 4px; }
+.prayer-library-category-card { padding: 18px; border: 1px solid var(--background-modifier-border); border-radius: 16px; background: var(--background-secondary); }
+.prayer-library-category-card h3 { margin: 0; }
+.prayer-library-category-card p { margin: 6px 0 14px; }
+.prayer-library-filters { display: grid; grid-template-columns: minmax(180px, 2fr) repeat(3, minmax(120px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.prayer-library-filters input, .prayer-library-filters select { min-width: 0; }
+.prayer-library-pray-now { width: min(900px, calc(100vw - 32px)); max-width: 900px; }
+.prayer-library-pray-now .modal-content { max-height: calc(100dvh - 90px); overflow-y: auto; padding-bottom: calc(180px + env(safe-area-inset-bottom)); }
+.prayer-library-pray-card { background: linear-gradient(145deg, var(--background-secondary), color-mix(in srgb, var(--interactive-accent) 7%, var(--background-secondary))); }
+@media (max-width: 800px) { .prayer-library-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .prayer-library-filters { grid-template-columns: 1fr 1fr; } .prayer-library-filters input { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .prayer-library-metrics { gap: 8px; } .prayer-library-metric { padding: 12px; } .prayer-library-metric strong { font-size: 1.45rem; } .prayer-library-filters { grid-template-columns: 1fr; } .prayer-library-filters input { grid-column: auto; } .prayer-library-pray-now { width: calc(100vw - 20px); } .prayer-library-pray-now .modal-content { max-height: none; padding-bottom: calc(320px + env(safe-area-inset-bottom)); scroll-padding-bottom: 60vh; } }

@@ -1,0 +1,1 @@
+{"compilerOptions":{"baseUrl":".","typeRoots":["node_modules/@types","node_modules/obsidian"],"module":"ESNext","target":"ES2017","moduleResolution":"node","strict":true,"noImplicitReturns":true,"noUnusedLocals":false,"skipLibCheck":true,"lib":["DOM","ES2017"]},"include":["src/**/*.ts"]}

@@ -1,0 +1,9 @@
+{
+  "id": "prayer-library",
+  "name": "Prayer Library",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "A mobile-friendly Markdown prayer planner with schedules, fair rotation, and history.",
+  "author": "Red-Beard",
+  "isDesktopOnly": false
+}
