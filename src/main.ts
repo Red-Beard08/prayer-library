@@ -1,4 +1,5 @@
 import { App, ItemView, Modal, Notice, Plugin, PluginSettingTab, Setting, TFile, WorkspaceLeaf } from "obsidian";
+import { registerDashboardModule, registerDashboardWidget } from "./dashboard-bridge";
 
 const VIEW = "prayer-library-dashboard";
 type Status = "active" | "answered" | "archived";
@@ -69,3 +70,23 @@ class PrayerView extends ItemView {
   private lastPrayed(p:Prayer,date:string){return p.prayed.filter(x=>x<=date).sort().pop()||"0000"}
   private renderCard(parent:HTMLElement,p:Prayer,date:string,daily:boolean){const card=parent.createDiv("prayer-library-card");const top=card.createDiv("prayer-library-card-top");top.createEl("h3",{text:p.title});top.createEl("span",{text:p.category,cls:"prayer-library-status"});card.createEl("p",{text:p.text||"(Add prayer text)"});if(p.scripture.length)card.createEl("p",{text:p.scripture.join(" · "),cls:"prayer-library-muted"});const actions=card.createDiv("prayer-library-actions");const b=actions.createEl("button",{text:p.prayed.includes(date)?"Prayed ✓":"Pray for this"});b.onclick=async()=>{await this.plugin.markPrayed(p,date);b.setText("Prayed ✓")};const edit=actions.createEl("button",{text:"Edit"});edit.onclick=()=>new PrayerModal(this.app,this.plugin,p).open();const open=actions.createEl("button",{text:"Open note"});open.onclick=()=>this.app.workspace.getLeaf(true).openFile(p.file)}
 }
+// Red-Beard Dashboard integration: launcher module and independent summary widget.
+const rbDisposals = new WeakMap<object, () => void>();
+const rbOnload = PrayerLibrary.prototype.onload;
+PrayerLibrary.prototype.onload = async function(this: PrayerLibrary) {
+  await rbOnload.call(this);
+  const disposals = [
+    registerDashboardModule(this.app, { id: "prayer-library", name: "Prayer Library", command: "prayer-library:open-dashboard", icon: "heart", description: "Daily prayer rotation and schedules.", order: 20 }),
+    registerDashboardWidget(this.app, { id: "prayer-library/overview", name: "Prayer Library", description: "Daily prayer rotation and schedules.", icon: "heart", defaultLayout: { w: 4, mobileW: 12, h: 2, order: 40 }, mobile: "responsive", render: (_ctx, container) => {
+      container.createEl("p", { text: "Daily prayer rotation and schedules." });
+      const button = container.createEl("button", { text: "Open Prayer Library" });
+      button.onclick = () => void this.activateView();
+    } })
+  ];
+  rbDisposals.set(this, () => disposals.forEach(dispose => dispose()));
+};
+const rbOnunload = PrayerLibrary.prototype.onunload;
+PrayerLibrary.prototype.onunload = async function(this: PrayerLibrary) {
+  rbDisposals.get(this)?.();
+ if (rbOnunload) await rbOnunload.call(this);
+};
