@@ -41,3 +41,11 @@
 .prayer-library-pray-card { background: linear-gradient(145deg, var(--background-secondary), color-mix(in srgb, var(--interactive-accent) 7%, var(--background-secondary))); }
 @media (max-width: 800px) { .prayer-library-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .prayer-library-filters { grid-template-columns: 1fr 1fr; } .prayer-library-filters input { grid-column: 1 / -1; } }
 @media (max-width: 600px) { .prayer-library-metrics { gap: 8px; } .prayer-library-metric { padding: 12px; } .prayer-library-metric strong { font-size: 1.45rem; } .prayer-library-filters { grid-template-columns: 1fr; } .prayer-library-filters input { grid-column: auto; } .prayer-library-pray-now { width: calc(100vw - 20px); } .prayer-library-pray-now .modal-content { max-height: none; padding-bottom: calc(320px + env(safe-area-inset-bottom)); scroll-padding-bottom: 60vh; } }
+
+.prayer-library-widget-list { display: grid; gap: 8px; width: 100%; margin: 10px 0; }
+.prayer-library-widget-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--background-modifier-border); border-radius: 12px; background: linear-gradient(135deg, var(--background-secondary), color-mix(in srgb, var(--interactive-accent) 6%, var(--background-secondary))); }
+.prayer-library-widget-copy { min-width: 0; }
+.prayer-library-widget-copy strong { display: block; }
+.prayer-library-widget-copy p { margin: .35rem 0 0; white-space: pre-line; color: var(--text-muted); font-size: .85em; line-height: 1.35; }
+.prayer-library-widget-row button { white-space: nowrap; }
+@media (max-width: 600px) { .prayer-library-widget-row { grid-template-columns: 1fr; } .prayer-library-widget-row button { width: 100%; } }

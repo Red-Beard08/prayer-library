@@ -77,8 +77,27 @@ PrayerLibrary.prototype.onload = async function(this: PrayerLibrary) {
   await rbOnload.call(this);
   const disposals = [
     registerDashboardModule(this.app, { id: "prayer-library", name: "Prayer Library", command: "prayer-library:open-dashboard", icon: "heart", description: "Daily prayer rotation and schedules.", order: 20 }),
-    registerDashboardWidget(this.app, { id: "prayer-library/overview", name: "Prayer Library", description: "Daily prayer rotation and schedules.", icon: "heart", defaultLayout: { w: 4, mobileW: 12, h: 2, order: 40 }, mobile: "responsive", render: (_ctx, container) => {
-      container.createEl("p", { text: "Daily prayer rotation and schedules." });
+    registerDashboardWidget(this.app, { id: "prayer-library/overview", name: "Prayer Library", description: "Today’s prayers with quick mark-prayed actions.", icon: "heart", defaultLayout: { w: 4, mobileW: 12, h: 3, order: 40 }, mobile: "responsive", render: (_ctx, container) => {
+      container.empty();
+      const date = today();
+      const active = this.getPrayers().filter(p => p.status === "active");
+      const chosen: Prayer[] = [];
+      const add = (p: Prayer) => { if (!chosen.some(item => item.id === p.id)) chosen.push(p); };
+      active.filter(p => p.schedule.some(s => matches(s, date))).forEach(add);
+      this.settings.categories.filter(c => !c.archived).forEach(c => active.filter(p => p.category === c.name && p.rotation && !chosen.some(item => item.id === p.id)).sort((a, b) => (a.prayed.filter(x => x <= date).sort().pop() || "0000").localeCompare(b.prayed.filter(x => x <= date).sort().pop() || "0000") || a.priority - b.priority || a.id.localeCompare(b.id)).slice(0, c.count).forEach(add));
+      container.createEl("p", { text: chosen.length ? `${date} · ${chosen.length} ${chosen.length === 1 ? "prayer" : "prayers"}` : "No prayers scheduled for today.", cls: "prayer-library-muted" });
+      const list = container.createDiv({ cls: "prayer-library-widget-list" });
+      chosen.slice(0, 5).forEach(p => {
+        const row = list.createDiv({ cls: "prayer-library-widget-row" });
+        const copy = row.createDiv({ cls: "prayer-library-widget-copy" });
+        copy.createEl("strong", { text: p.title });
+        copy.createEl("span", { text: p.category, cls: "prayer-library-status" });
+        if (p.text) copy.createEl("p", { text: p.text, cls: "prayer-library-widget-text" });
+        const prayed = p.prayed.includes(date);
+        const mark = row.createEl("button", { text: prayed ? "Prayed ✓" : "Mark prayed" });
+        mark.disabled = prayed;
+        mark.onclick = async () => { await this.markPrayed(p, date); mark.setText("Prayed ✓"); mark.disabled = true; };
+      });
       const button = container.createEl("button", { text: "Open Prayer Library" });
       button.onclick = () => void this.activateView();
     } })
