@@ -25,3 +25,7 @@ schedule:
 ```
 
 Scripture links are optional and can point to Scripture Library notes or any native Obsidian note.
+
+## Public integration bridge
+
+Other Red-Beard add-ons may use the optional public methods `getDailyPrayers(date, categories)`, `markPrayed(prayerId, date)`, and `openPrayer(prayerId)`. These methods return the same scheduled and rotating daily selection used by the Prayer Library dashboard, so integrations do not need to duplicate rotation logic or create a second prayer history.
