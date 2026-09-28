@@ -10,7 +10,7 @@ Mark items prayed from the daily dashboard. Dates and optional notes are stored 
 
 ## Storage
 
-The default root is `Prayer Library/` with `Prayers/` and `Daily Reports/`. The root is configurable in plugin settings. All data is ordinary Markdown and no network or other plugin is required.
+The default root is `Prayer Library/` with `Prayers/`, `Daily Reports/`, and one small `Prayer Log.md`. The log stores an ordered list of prayer IDs for each date. A date is selected once, then reused by the Prayer Library dashboard, Pray Now flow, Journal Companion, and Dashboard widget for the rest of that day; the next date gets a new snapshot. The root and log path are configurable in plugin settings. All data is ordinary Markdown and no network or other plugin is required.
 
 ## Schedule example
 
@@ -28,4 +28,4 @@ Scripture links are optional and can point to Scripture Library notes or any nat
 
 ## Public integration bridge
 
-Other Red-Beard add-ons may use the optional public methods `getDailyPrayers(date, categories)`, `markPrayed(prayerId, date)`, and `openPrayer(prayerId)`. These methods return the same scheduled and rotating daily selection used by the Prayer Library dashboard, so integrations do not need to duplicate rotation logic or create a second prayer history.
+Other Red-Beard add-ons may use the optional public methods `getDailyPrayers(date, categories)`, `markPrayed(prayerId, date)`, and `openPrayer(prayerId)`. These methods return the same date snapshot used by the Prayer Library dashboard, so integrations do not need to duplicate rotation logic or create a second prayer history. `open-prayer-log` opens the compact Markdown ledger when you want to inspect the selected IDs.
